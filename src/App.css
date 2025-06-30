@@ -32,7 +32,44 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+/* App styles */
+
+.app-main-bg {
+  background: #f9f4e8;
+  min-height: 100vh;
+}
+
+.dashboard-title-center {
+  width: 70%;
+}
+
+.fee-row {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+.fee-card {
+  background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%);
+  color: #16a34a;
+  font-weight: bold;
+  border-radius: 12px;
+  padding: 10px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.2s, transform 0.2s;
+  border: 2px solid #fff;
+  min-width: 260px;
+  text-align: center;
+}
+
+.fee-card:hover {
+  box-shadow: 0 4px 16px rgba(218, 165, 32, 0.15);
+  transform: translateY(-2px) scale(1.03);
+  border-color: #FFA500;
 }

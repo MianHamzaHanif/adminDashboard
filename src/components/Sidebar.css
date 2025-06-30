@@ -1,0 +1,35 @@
+/* Sidebar styles */
+
+.sidebar {
+    background: #151c2c;
+    min-height: 100vh;
+    color: #fff;
+    padding: 0;
+    transition: width 0.3s ease-in-out;
+    overflow: hidden;
+    position: fixed;
+    left: 0;
+    top: 80px;
+    height: calc(100vh - 80px);
+    z-index: 1000;
+}
+
+.sidebar-collapsed .sidebar-text {
+    display: none;
+}
+
+.sidebar-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+}
+
+.sidebar_bd li {
+    background: #232b45;
+    width: 500px;
+}
+
+.app-main-bg {
+    margin-left: 280px;
+}

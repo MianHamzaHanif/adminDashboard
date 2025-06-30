@@ -1,0 +1,11 @@
+/* DashboardCards styles */
+
+.dashboard-cards-container {
+  padding: 1rem 0;
+}
+
+.dashboard-card {
+  border-radius: 12px;
+  color: #fff;
+  border: none;
+}
