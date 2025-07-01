@@ -26,9 +26,9 @@ const Sidebar = ({ isOpen }) => {
     const sidebarClass = `sidebar${!isOpen ? ' sidebar-collapsed' : ''}`;
 
     return (
-        <div className={sidebarClass} style={{ width: isOpen ? 280 : 60 }}>
-            <div className="p-2" style={{ width: isOpen ? 280 : 65, paddingLeft: 100 }}>
-               <NavLink to="/dashboard" style={linkStyle} className="btn w-100 mb-3">
+        <div className={sidebarClass} style={{ width: isOpen ? 210 : 60 }}>
+            <div className="p-2" style={{ width: isOpen ? 210 : 60, paddingLeft: 100 }}>
+                <NavLink to="/dashboard" style={linkStyle} className="btn w-100 mb-3">
                     <span className="sidebar-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="me-2" viewBox="0 0 16 16">
                             <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zm-3.5-7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h1z" />
@@ -36,8 +36,8 @@ const Sidebar = ({ isOpen }) => {
                     </span>
                     <span className={sidebarTextClass}>Dashboard</span>
                 </NavLink>
-                <div className="text-success mb-1 mt-4" style={{ fontSize: 13, fontWeight: 600 }}>
-                    <span className={sidebarTextClass}>CUSTOMER MANAGEMENT</span>
+                <div className="text-success mb-1 mt-4" >
+                    <span className={sidebarTextClass} style={{ fontSize: 10, fontWeight: 600 }}>CUSTOMER MANAGEMENT</span>
                 </div>
                 <button
                     className="btn w-100 d-flex align-items-center justify-content-between mb-1"
@@ -56,7 +56,7 @@ const Sidebar = ({ isOpen }) => {
                 </button>
                 <Collapse in={openCustomers}>
                     <div id="customers-collapse" className="mb-2" style={{ borderRadius: 8 }}>
-                      
+
                         <ul className="list-unstyled mb-0 p-2 sidebar_bd">
                             <li>
                                 <NavLink to="/customers/all" style={linkStyle}>

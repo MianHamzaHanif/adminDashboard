@@ -11,7 +11,8 @@
     left: 0;
     top: 80px;
     height: calc(100vh - 80px);
-    z-index: 1000;
+    z-index: 999;
+    width: 200px;
 }
 
 .sidebar-collapsed .sidebar-text {
@@ -19,17 +20,39 @@
 }
 
 .sidebar-icon {
-    display: inline-flex;
+    min-width: 24px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 32px;
 }
 
 .sidebar_bd li {
     background: #232b45;
-    width: 500px;
+    width: 185px;
 }
 
 .app-main-bg {
-    margin-left: 280px;
+    margin-left: 200px;
+}
+
+.sidebar .p-2 {
+    width: 200px;
+    padding-left: 12px;
+}
+
+.sidebar a,
+.sidebar button,
+.sidebar .sidebar-text {
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar .sidebar-text {
+    flex: 1;
+    min-width: 0;
 }

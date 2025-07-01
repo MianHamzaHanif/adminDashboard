@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './AllCustomers.css';
-import EditCustomerModal from './EditCustomerModal';
-import EmailLetterheadModal from './EmailLetterheadModal';
 import { useNavigate } from 'react-router-dom';
+import SendMailModal from './SendMailModal';
 
 const dummyData = [
     {
@@ -186,9 +185,8 @@ const AllCustomers = () => {
     const [search, setSearch] = useState('');
     const [page, setPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [editModalOpen, setEditModalOpen] = useState(false);
-    const [editCustomer, setEditCustomer] = useState(null);
     const [emailModalOpen, setEmailModalOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState({ name: '', id: '' });
     const navigate = useNavigate();
 
     const filtered = dummyData.filter(row =>
@@ -206,9 +204,7 @@ const AllCustomers = () => {
 
     return (
         <div className="all-customers-container">
-            <EmailLetterheadModal open={emailModalOpen} onClose={() => setEmailModalOpen(false)} />
-            <EditCustomerModal open={editModalOpen} onClose={() => setEditModalOpen(false)} customer={editCustomer} />
-            <h2 className="all-customers-heading">All Customers</h2>
+            <h6 className="all-customers-heading">All Customers</h6>
             <div className="all-customers-controls">
                 <div>
                     <span className='all-customers-entries'>Show Records</span>
@@ -258,7 +254,7 @@ const AllCustomers = () => {
                                             <path d="M15.502 1.94a1.5 1.5 0 0 1 0 2.12l-1.439 1.439-2.12-2.12 1.439-1.44a1.5 1.5 0 0 1 2.12 0zm-2.56 3.18-2.12-2.12L2 11.44V13.5a.5.5 0 0 0 .5.5h2.06l8.44-8.44z" />
                                         </svg>
                                     </button>
-                                    <button className="action-btn email-btn" title="Email" onClick={() => setEmailModalOpen(true)}>
+                                    <button className="action-btn email-btn" title="Email" onClick={() => { setSelectedUser({ name: row.email, id: row.id }); setEmailModalOpen(true); }}>
                                         <svg width="18" height="18" fill="#fff" viewBox="0 0 16 16">
                                             <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.708 2.825L15 11.118V5.383zm-.034 6.876-5.64-3.388L8 9.583l-1.326-.712-5.64 3.388A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741zM1 5.383v5.735l4.708-2.91L1 5.383z" />
                                         </svg>
@@ -281,6 +277,17 @@ const AllCustomers = () => {
                     <button disabled={page === totalPages} onClick={() => setPage(page + 1)}>&raquo;</button>
                 </div>
             </div>
+            <SendMailModal
+                show={emailModalOpen}
+                onClose={() => setEmailModalOpen(false)}
+                userName={selectedUser.name}
+                userId={selectedUser.id}
+                onSubmit={e => {
+                    e.preventDefault();
+                    // handle form submit logic here
+                    setEmailModalOpen(false);
+                }}
+            />
         </div>
     );
 };

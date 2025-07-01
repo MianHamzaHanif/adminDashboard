@@ -12,7 +12,7 @@ import logo from './assets/apollo-logo.png';
 const Dashboard = () => (
   <>
     <div className="container-fluid mt-4">
-    
+
       {/* <div className="fee-row mb-3">
         <div className="fee-card">$37.275000000 Transition Gas Source fee</div>
         <div className="fee-card">$10.525000000 Transition Gas Source fee</div>
@@ -40,15 +40,11 @@ function App() {
   };
 
   return (
-    
     <Router>
-      <img src={logo} alt="Logo" style={{ width: 60, height: 40, borderRadius: '50%', marginTop: 15, position: 'absolute', left: 10 }} />
-      <h5 style={{ position: 'absolute', left: 60 , top: 15, marginTop: 15, color: '#3db74f' }}>Apollo Mass Dashboard</h5>
-
-      <div className="d-flex app-main-bg">
+      <DashboardNavbar toggleSidebar={toggleSidebar} />
+      <div className="d-flex app-main-bg main-content-with-navbar">
         <Sidebar isOpen={sidebarOpen} />
         <div className="flex-grow-1 dashboard-title-center">
-          <DashboardNavbar toggleSidebar={toggleSidebar} />
           <Routes>
             <Route path="/" element={<Navigate to="/dashboard" />} />
             <Route path="/dashboard" element={<Dashboard />} />

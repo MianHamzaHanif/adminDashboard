@@ -48,16 +48,16 @@
     gap: 32px;
     margin-top: 16px;
     height: 100%;
-    margin-top: 50px;
+    margin-top: 12px;
 }
 
 .edit-modal-left {
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    padding: 32px 24px 24px 24px;
-    min-width: 320px;
-    max-width: 340px;
+    padding: 10px 24px 5px 24px;
+    min-width: 250px;
+    max-width: 350px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -66,8 +66,8 @@
 }
 
 .edit-modal-avatar img {
-    width: 120px;
-    height: 120px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     object-fit: cover;
     background: #f3f3f3;
@@ -78,18 +78,19 @@
     font-size: 18px;
     font-weight: 500;
     color: #222;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .edit-modal-actions {
     display: flex;
-    gap: 16px;
+    gap: 10px;
     margin-bottom: 12px;
 }
 
+
 .edit-modal-action-btn {
-    width: 44px;
-    height: 44px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     border: none;
     background: #181c2c;
@@ -130,8 +131,8 @@
     margin-bottom: 12px;
     display: flex;
     flex-direction: column;
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 10px;
+    font-weight: 600;
     box-shadow: 0 1px 4px rgba(30, 60, 114, 0.08);
 }
 
@@ -144,8 +145,8 @@
 }
 
 .edit-modal-wallet-balance {
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 10px;
+    font-weight: 600;
     margin-top: 4px;
 }
 
@@ -155,12 +156,26 @@
     border-radius: 8px;
     border: 1px solid #ececec;
     padding: 16px 12px 10px 12px;
-    margin-top: 8px;
 }
 
 .edit-modal-account-title {
-    font-weight: 600;
-    font-size: 16px;
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.edit-modal-account-subtitle {
+    margin-top: 5px;
+    width: 100%;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #ececec;
+    padding: 16px 12px 10px 12px;
+}
+
+.edit-modal-account-subtitle-title {
+    font-weight: 400;
+    font-size: 12px;
     margin-bottom: 10px;
 }
 
@@ -232,9 +247,12 @@
 }
 
 .edit-modal-card-title {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
+    padding-bottom: 10px;
     margin-bottom: 18px;
+    border-bottom: 1px solid #ececec;
+
 }
 
 .edit-modal-form {
@@ -250,12 +268,10 @@
 
 .edit-modal-form-group {
     flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 6px;
-}
-
-.edit-modal-form-group label {
     font-size: 15px;
     font-weight: 500;
     color: #444;
@@ -265,7 +281,7 @@
     padding: 10px 12px;
     border: 1px solid #e0e0e0;
     border-radius: 6px;
-    font-size: 16px;
+    font-size: 15px;
     background: #f7f7fa;
     color: #222;
 }
@@ -290,19 +306,139 @@
 }
 
 .edit-modal-save:hover {
-    background: #4b2bb5;
+    background: #1a9829;
 }
 
-.edit-modal-input {
-    padding: 10px 12px;
-    border: 1px solid #e0e0e0;
+.edit-modal-input,
+.phone-input-full {
+    width: 100% !important;
+    height: 40px !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+}
+
+.phone-input-container {
+    width: 100%;
+}
+
+.phone-input-full input {
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+}
+
+.edit-customer-bg {
+    background: #f8f8fb;
+    min-height: 100vh;
+    padding: 0 0 40px 0;
+}
+
+.edit-customer-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 24px 0;
+    padding-top: 12px;
+}
+
+.edit-customer-header-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-left: 22px;
+}
+
+.edit-customer-back-btn {
+    background: #6c47e6;
+    color: #fff;
+    border: none;
     border-radius: 6px;
+    padding: 8px 22px;
+    font-weight: 500;
     font-size: 16px;
-    background: #f7f7fa;
-    color: #222;
+    cursor: pointer;
+    margin-right: 22px;
 }
 
-.edit-modal-input[readonly] {
+.edit-customer-content {
+    max-width: 1280px;
+    margin: 5px auto;
+    display: flex;
+    gap: 5px;
+}
+
+.edit-customer-tabs {
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #ececec;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.edit-customer-tab {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    background: none;
+    color: #222;
+    border: none;
+    border-radius: 6px;
+    padding: 5px 9px;
+    font-weight: 400;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.edit-customer-tab.active {
+    background: #6c47e6;
+    color: #fff;
+    font-weight: 700;
+}
+
+.tab-icon {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    margin-left: 4px;
+}
+
+.edit-customer-card {
+    padding: 24px;
+}
+
+.edit-customer-save-btn {
+    width: 100%;
+    background: #6c47e6;
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    margin-top: 18px;
+}
+
+.edit-status-btn {
+    padding: 4px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    border: none;
     background: #ececec;
     color: #888;
+    margin-right: 0px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.edit-status-btn.active {
+    background: #16a34a;
+    color: #fff;
+}
+
+.edit-status-btn.disabled {
+    background: #e53935;
+    color: #fff;
 }

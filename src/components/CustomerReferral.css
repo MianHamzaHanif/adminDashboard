@@ -1,0 +1,46 @@
+/* CustomerReferral styles - matches other site-card components */
+
+.site-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    margin-bottom: 24px;
+    padding: 0;
+}
+.site-card-header {
+    border-bottom: 1px solid #ececec;
+    padding: 18px 24px 0 24px;
+}
+.site-card-header .title {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+}
+.site-card-body {
+    padding: 24px;
+}
+.site-card-body p {
+    text-align: center;
+    color: #888;
+    font-size: 16px;
+    margin: 32px 0 0 0;
+}
+@media (max-width: 900px) {
+    .site-card-body {
+        padding: 10px;
+    }
+    .site-card-header {
+        padding: 10px 10px 0 10px;
+    }
+}
+@media (max-width: 600px) {
+    .site-card-body {
+        padding: 6px;
+    }
+    .site-card-header {
+        padding: 6px 6px 0 6px;
+    }
+    .site-card-body p {
+        font-size: 14px;
+    }
+} 
