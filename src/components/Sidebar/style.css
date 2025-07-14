@@ -1,0 +1,58 @@
+/* Sidebar styles */
+
+.sidebar {
+    background: #151c2c;
+    min-height: 100vh;
+    color: #fff;
+    padding: 0;
+    transition: width 0.3s ease-in-out;
+    overflow: hidden;
+    position: fixed;
+    left: 0;
+    top: 80px;
+    height: calc(100vh - 80px);
+    z-index: 999;
+    width: 200px;
+}
+
+.sidebar-collapsed .sidebar-text {
+    display: none;
+}
+
+.sidebar-icon {
+    min-width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar_bd li {
+    background: #232b45;
+    width: 185px;
+}
+
+.app-main-bg {
+    margin-left: 200px;
+}
+
+.sidebar .p-2 {
+    width: 200px;
+    padding-left: 12px;
+}
+
+.sidebar a,
+.sidebar button,
+.sidebar .sidebar-text {
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar .sidebar-text {
+    flex: 1;
+    min-width: 0;
+}
