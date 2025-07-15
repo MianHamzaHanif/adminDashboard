@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './style.css';
 import { useNavigate } from 'react-router-dom';
 import SendMailModal from '../SendMailModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUsers, resetUsers } from '../../features/customers/customersSlice';
 import { getUserDepositWithdraw } from '../../blockchain/instances/contract';
 import { Contract, ethers } from 'ethers';
 import { APOLLOMASS_ADDRESS } from '../../blockchain/addresses/addresses';
@@ -11,16 +13,27 @@ import { formatEther } from 'viem';
 const ROOT_ADDRESS = '0x892fB6220119677Cbaf64ed7F1E3A394e6155C56';
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
-async function traverseReferralTree(root, onAddress, cancelledRef) {
+async function traverseReferralTree(root, onUser) {
     const provider = new ethers.BrowserProvider(window.ethereum);
     const contract = new Contract(APOLLOMASS_ADDRESS, appolomassAbi, provider);
     const visited = new Set();
+    let idx = 1;
     async function visit(address) {
-        if (!address || visited.has(address) || cancelledRef.current) return;
+        if (!address || visited.has(address)) return;
         visited.add(address);
-        await onAddress(address);
-        for (let idx = 1; idx <= 2; idx++) {
-            const child = await contract.referralNodeAddress(address, 1, idx);
+        try {
+            const { deposit, withdraw } = await getUserDepositWithdraw(address);
+            onUser({
+                id: idx++,
+                address,
+                deposit,
+                withdraw,
+            });
+        } catch (e) {
+            // skip on error
+        }
+        for (let i = 1; i <= 2; i++) {
+            const child = await contract.referralNodeAddress(address, 1, i);
             if (child && child !== ZERO_ADDRESS) {
                 await visit(child);
             }
@@ -35,34 +48,32 @@ const AllCustomers = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [emailModalOpen, setEmailModalOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState({ name: '', id: '' });
-    const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    const users = useSelector(state => state.customers.users);
     const navigate = useNavigate();
 
+    // Fetch only if users are empty
     useEffect(() => {
-        const cancelledRef = { current: false };
+        if (users && users.length > 0) return;
         setLoading(true);
-        setUsers([]);
-        let idx = 1;
-        traverseReferralTree(ROOT_ADDRESS, async (address) => {
-            if (cancelledRef.current) return;
-            try {
-                const { deposit, withdraw } = await getUserDepositWithdraw(address);
-                setUsers(prev => [
-                    ...prev,
-                    {
-                        id: idx++,
-                        address,
-                        deposit,
-                        withdraw,
-                    },
-                ]);
-            } catch (e) {
-                // skip on error
-            }
-        }, cancelledRef).then(() => setLoading(false));
-        return () => { cancelledRef.current = true; };
-    }, []);
+        const loadedUsers = [];
+        traverseReferralTree(ROOT_ADDRESS, (user) => {
+            loadedUsers.push(user);
+            dispatch(setUsers([...loadedUsers]));
+        }).then(() => setLoading(false));
+    }, [dispatch, users]);
+
+    // Manual refresh
+    const handleRefresh = () => {
+        setLoading(true);
+        dispatch(resetUsers());
+        const loadedUsers = [];
+        traverseReferralTree(ROOT_ADDRESS, (user) => {
+            loadedUsers.push(user);
+            dispatch(setUsers([...loadedUsers]));
+        }).then(() => setLoading(false));
+    };
 
     const filtered = users.filter(row =>
         row.address.toLowerCase().includes(search.toLowerCase())
@@ -99,6 +110,9 @@ const AllCustomers = () => {
                 <div>
                     <span className='all-customers-entries'>Search: </span> <input className="all-customers-search-input" value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} />
                 </div>
+                <button className="all-customers-reload px-3 text-white rounded border-0 outline-0" style={{backgroundColor: "#7b4fe2"}} onClick={handleRefresh} disabled={loading}>
+                     Refresh
+                </button>
             </div>
             <div className="all-customers-table-wrapper">
                 <table className="all-customers-table">

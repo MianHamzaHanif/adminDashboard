@@ -4,6 +4,7 @@ import appolomassAbi from "../abis/appolomass.json";
 import { APOLLOTOKEN_ADDRESS } from "../addresses/addresses";
 import appolotokenAbi from "../abis/appolotoken.json";
 import { zeroAddress } from "viem";
+import { parseEther } from "ethers";
 
 // Set up provider and signer
 
@@ -266,7 +267,7 @@ export const getOwnerAddress = async () => {
   try {
     const provider = new ethers.BrowserProvider(window.ethereum);
     const contract = new Contract(APOLLOMASS_ADDRESS, appolomassAbi, provider);
-    const owner = await contract.initialReferrer();
+    const owner = await contract.owner();
     return owner;
   } catch (error) {
     console.error('Error fetching owner address:', error);
@@ -375,4 +376,78 @@ export const getReferralTreeWithBalances = async (rootAddress) => {
   );
   console.log("results", results);
   return results;
+};
+
+export const updatePreviousBuyRecord = async (_userAddress, _inviter, _packageNo) => {
+  try {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const contract = new Contract(APOLLOMASS_ADDRESS, appolomassAbi, signer);
+    const tx = await contract.updatePreviousBuyRecord(_userAddress, _inviter, _packageNo);
+    await tx.wait();
+    return tx;
+  } catch (error) {
+    console.error('Error calling updatePreviousBuyRecord:', error);
+    throw error;
+  }
+};
+
+export const updatePreviousWithdrawRecord = async (_userAddress) => {
+  try {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const contract = new Contract(APOLLOMASS_ADDRESS, appolomassAbi, signer);
+    const tx = await contract.updatePreviousWithdrawRecord(_userAddress);
+    await tx.wait();
+    return tx;
+  } catch (error) {
+    console.error('Error calling updatePreviousWithdrawRecord:', error);
+    throw error;
+  }
+};
+
+export const updateAllowedUser = async (_userAddres, status) => {
+  try {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const contract = new Contract(APOLLOMASS_ADDRESS, appolomassAbi, signer);
+    const tx = await contract.updateAllowedUser(_userAddres, status);
+    await tx.wait();
+    return tx;
+  } catch (error) {
+    console.error('Error calling updateAllowedUser:', error);
+    throw error;
+  }
+}; 
+
+export const updateAllowedWithdraw = async (_userAddres, status) => {
+  try {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const contract = new Contract(APOLLOMASS_ADDRESS, appolomassAbi, signer);
+    const tx = await contract.updateAllowedWithdraw(_userAddres, status);
+    await tx.wait();
+    return tx;
+  } catch (error) {
+    console.error('Error calling updateAllowedUser:', error);
+    throw error;
+  }
+}; 
+
+export const emergencyWithdraw = async (_owner, _amount) => {
+  console.log("amount ", _amount)
+  try {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const contract = new Contract(APOLLOMASS_ADDRESS, appolomassAbi, signer);
+    const amountParsed = parseEther(_amount.toString());
+  console.log("amount ", amountParsed)
+
+    const tx = await contract.emergencyWithdraw(_owner, amountParsed);
+    await tx.wait();
+    return tx;
+  } catch (error) {
+    console.error('Error calling emergencyWithdraw:', error);
+    throw error;
+  }
 }; 

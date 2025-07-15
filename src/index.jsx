@@ -29,7 +29,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { store } from './app/store';
+// import { store } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
@@ -37,10 +37,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { WagmiProvider } from 'wagmi';
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
-import { mainnet, bscTestnet } from '@reown/appkit/networks';
+import { mainnet, bscTestnet, bsc } from '@reown/appkit/networks';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createAppKit } from '@reown/appkit/react';
-
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistor, store } from './features/customers/store';
+// import { PersistGate } from 'redux-persist/integration/react';
 // ✅ Create client
 const queryClient = new QueryClient();
 
@@ -54,7 +56,7 @@ const metadata = {
   icons: ['https://avatars.githubusercontent.com/u/179229932'],
 };
 
-const networks = [bscTestnet, mainnet];
+const networks = [bscTestnet, mainnet, bsc];
 
 const wagmiAdapter = new WagmiAdapter({
   networks,
@@ -80,11 +82,13 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <WagmiProvider config={wagmiAdapter.wagmiConfig}>
         <Provider store={store}>
-          <App />
+          <PersistGate loading={null} persistor={persistor}>
+            <App />
+          </PersistGate>
         </Provider>
       </WagmiProvider>
     </QueryClientProvider>
-  </React.StrictMode>
+  </React.StrictMode >
 );
 
 reportWebVitals();

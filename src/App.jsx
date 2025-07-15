@@ -8,6 +8,11 @@ import AllCustomers from './components/AllCustomers';
 import EditCustomer from './components/EditCustomer';
 import './App.css';
 import logo from './assets/apollo-logo.png';
+import BuyRecord from './components/updatefunctions/BuyRecord';
+import WithdrawRecord from './components/updatefunctions/WithdrawRecord';
+import AllowedUsers from './components/updatefunctions/AllowedUsers';
+import AllowedWithdraw from './components/updatefunctions/AllowedWithdraw';
+import EmergencyWithdraw from './components/updatefunctions/EmergencyWithdraw';
 
 const Dashboard = () => (
   <>
@@ -48,6 +53,11 @@ function App() {
           <Routes>
             <Route path="/" element={<Navigate to="/dashboard" />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/buy-record" element={<BuyRecord />} />
+            <Route path="/withdraw-record" element={<WithdrawRecord />} />
+            <Route path="/allowed-users" element={<AllowedUsers />} />
+            <Route path="/allowed-withdraw" element={<AllowedWithdraw />} />
+            <Route path="/emergency-withdraw" element={<EmergencyWithdraw />} />
             <Route path="/customers/all" element={<AllCustomers />} />
             <Route path="/customers/edit/:id" element={<EditCustomer />} />
             <Route path="/customers/active" element={<ActiveCustomers />} />

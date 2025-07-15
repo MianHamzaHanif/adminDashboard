@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getWithdrawLength, userAllWithdrawInfo } from '../../blockchain/instances/contract';
+import { formatEther } from 'viem';
 
 const columns = [
     { label: '#', key: 'index' },
@@ -63,7 +64,11 @@ export default function WalletLog({ address }) {
                         <tr><td colSpan={columns.length}>No Data Found</td></tr>
                     ) : paginatedData.map((row, idx) => (
                         <tr key={idx}>
-                            {columns.map(col => <td key={col.key}>{row[col.key]}</td>)}
+                            {columns.map(col => (
+                                <td key={col.key}>
+                                    {col.key === 'amount' ? formatEther(row[col.key] || '0') : row[col.key]}
+                                </td>
+                            ))}
                         </tr>
                     ))}
                 </tbody>
