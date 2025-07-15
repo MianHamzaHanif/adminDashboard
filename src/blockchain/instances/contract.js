@@ -9,11 +9,18 @@ import { parseEther } from "ethers";
 // Set up provider and signer
 
 
+const BSC_MAINNET_RPC = 'https://bsc-dataseed1.binance.org';
+
+function getReadProvider() {
+  return new ethers.JsonRpcProvider(BSC_MAINNET_RPC);
+}
+
 
 
 export const getDetails = async (packageType, user, level) => {
   try {
-    const provider = new ethers.BrowserProvider(window.ethereum);
+    // const provider = new ethers.BrowserProvider(window.ethereum);
+  const provider = getReadProvider();
     const contract = new Contract(APOLLOMASS_ADDRESS, appolomassAbi, provider);
     const result = await contract.getDetails(packageType, user, level);
     // result: [address[], string[]]
@@ -41,7 +48,8 @@ export const getAllPackage = async (userAddress) => {
 
 export const getUserPackageDetails = async (packageAmount, userAddress) => {
   try {
-    const provider = new ethers.BrowserProvider(window.ethereum);
+    // const provider = new ethers.BrowserProvider(window.ethereum);
+    const provider = getReadProvider();
     const contract = new Contract(APOLLOMASS_ADDRESS, appolomassAbi, provider);
     let result;
     switch (packageAmount) {
@@ -55,7 +63,7 @@ export const getUserPackageDetails = async (packageAmount, userAddress) => {
         result = await contract.userDetails(100, userAddress);
         break;
       case 500:
-        result = await contract.userDetails(500,userAddress);
+        result = await contract.userDetails(500, userAddress);
         break;
       case 1000:
         result = await contract.userDetails(1000, userAddress);
@@ -163,7 +171,8 @@ export const getBonusReward = async (userAddress) => {
 
 export const getWithdrawLength = async (userAddress) => {
   try {
-    const provider = new ethers.BrowserProvider(window.ethereum);
+    // const provider = new ethers.BrowserProvider(window.ethereum);
+    const provider = getReadProvider();
     const contract = new Contract(APOLLOMASS_ADDRESS, appolomassAbi, provider);
     const result = await contract.getWithdrawLength(userAddress);
     return result;
@@ -175,7 +184,8 @@ export const getWithdrawLength = async (userAddress) => {
 
 export const userAllWithdrawInfo = async (userAddress, index) => {
   try {
-    const provider = new ethers.BrowserProvider(window.ethereum);
+    // const provider = new ethers.BrowserProvider(window.ethereum);
+    const provider = getReadProvider();
     const contract = new Contract(APOLLOMASS_ADDRESS, appolomassAbi, provider);
     const result = await contract.userAllWithdrawInfo(userAddress, index);
     return result;
@@ -265,7 +275,8 @@ export const userBonusInfo = async (userAddress) => {
 
 export const getOwnerAddress = async () => {
   try {
-    const provider = new ethers.BrowserProvider(window.ethereum);
+    // const provider = new ethers.BrowserProvider(window.ethereum);
+    const provider = getReadProvider();
     const contract = new Contract(APOLLOMASS_ADDRESS, appolomassAbi, provider);
     const owner = await contract.owner();
     return owner;
@@ -277,7 +288,8 @@ export const getOwnerAddress = async () => {
 
 export const getUserIdP20 = async (userAddress) => {
   try {
-    const provider = new ethers.BrowserProvider(window.ethereum);
+    // const provider = new ethers.BrowserProvider(window.ethereum);
+    const provider = getReadProvider();
     const contract = new Contract(APOLLOMASS_ADDRESS, appolomassAbi, provider);
     const result = await contract.userDetailsP20(userAddress);
     // console.log("result of userDetailsP20", result);
@@ -333,7 +345,7 @@ export async function getTokenBalance(userAddress) {
 
 
 export const getReferralTree = async (rootAddress) => {
-  const provider = new ethers.BrowserProvider(window.ethereum);
+  const provider = getReadProvider();
   const contract = new Contract(APOLLOMASS_ADDRESS, appolomassAbi, provider);
   const addresses = [];
   // Helper function for recursion
@@ -353,7 +365,7 @@ export const getReferralTree = async (rootAddress) => {
 
 
 export const getUserDepositWithdraw = async (address) => {
-  const provider = new ethers.BrowserProvider(window.ethereum);
+  const provider = getReadProvider();
   const contract = new Contract(APOLLOMASS_ADDRESS, appolomassAbi, provider);
   const deposit = await contract.usertotalDeposit(address);
   const withdraw = await contract.userTotalWithdraw(address);
@@ -418,7 +430,7 @@ export const updateAllowedUser = async (_userAddres, status) => {
     console.error('Error calling updateAllowedUser:', error);
     throw error;
   }
-}; 
+};
 
 export const updateAllowedWithdraw = async (_userAddres, status) => {
   try {
@@ -432,7 +444,7 @@ export const updateAllowedWithdraw = async (_userAddres, status) => {
     console.error('Error calling updateAllowedUser:', error);
     throw error;
   }
-}; 
+};
 
 export const emergencyWithdraw = async (_owner, _amount) => {
   console.log("amount ", _amount)
@@ -441,7 +453,7 @@ export const emergencyWithdraw = async (_owner, _amount) => {
     const signer = await provider.getSigner();
     const contract = new Contract(APOLLOMASS_ADDRESS, appolomassAbi, signer);
     const amountParsed = parseEther(_amount.toString());
-  console.log("amount ", amountParsed)
+    console.log("amount ", amountParsed)
 
     const tx = await contract.emergencyWithdraw(_owner, amountParsed);
     await tx.wait();

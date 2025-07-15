@@ -13,8 +13,14 @@ import { formatEther } from 'viem';
 const ROOT_ADDRESS = '0x892fB6220119677Cbaf64ed7F1E3A394e6155C56';
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
+const BSC_MAINNET_RPC = 'https://bsc-dataseed1.binance.org/';
+
+function getReadProvider() {
+  return new ethers.JsonRpcProvider(BSC_MAINNET_RPC);
+}
+
 async function traverseReferralTree(root, onUser) {
-    const provider = new ethers.BrowserProvider(window.ethereum);
+    const provider = getReadProvider();
     const contract = new Contract(APOLLOMASS_ADDRESS, appolomassAbi, provider);
     const visited = new Set();
     let idx = 1;

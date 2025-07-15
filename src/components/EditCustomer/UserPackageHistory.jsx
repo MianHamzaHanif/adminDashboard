@@ -31,12 +31,14 @@ export default function UserPackageHistory({ address }) {
         try {
           const details = await getUserPackageDetails(pkg, address);
           const timestamp = details[3];
+          console.log("timestamptimestamp",timestamp)
           const amount = details[5];
           return {
             name: packageNames[pkg] || `Package ${pkg}`,
             joiningAmount: amount ? ethers.formatEther(amount) : '',
             purchaseDate: timestamp ? new Date(Number(timestamp) * 1000).toLocaleString() : '',
           };
+          
         } catch (e) {
           return null;
         }
