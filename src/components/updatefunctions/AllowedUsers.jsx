@@ -94,7 +94,7 @@ const AllowedUsers = () => {
                                 checked={status === true}
                                 onChange={() => setStatus(true)}
                             />
-                            Block
+                            Allowed
                         </label>
                         <label style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                             <input
@@ -103,7 +103,7 @@ const AllowedUsers = () => {
                                 checked={status === false}
                                 onChange={() => setStatus(false)}
                             />
-                            Unblock
+                            Un Allowed
                         </label>
                     </div>
                 </div>
