@@ -199,8 +199,8 @@ const ReferralTree = ({ address }) => {
             <foreignObject x={-NODE_RADIUS} y={-NODE_RADIUS} width={NODE_RADIUS * 2} height={NODE_RADIUS * 2}>
               <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
                 <svg
-                  width={38}
-                  height={38}
+                  width={28}
+                  height={28}
                   viewBox="0 0 38 38"
                   style={{
                     borderRadius: '50%',

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { updatePreviousBuyRecord } from '../../blockchain/instances/contract';
+import { updatePreviousBuyRecord, getAddressFromUniqueId } from '../../blockchain/instances/contract';
+import { ethers } from 'ethers';
 
 const BuyRecord = () => {
     const [userAddress, setUserAddress] = useState('');
@@ -15,10 +16,16 @@ const BuyRecord = () => {
         setSuccess('');
         setError('');
         try {
-            await updatePreviousBuyRecord(userAddress, inviter, packageNo);
+            let inviterAddress = inviter;
+            if (!ethers.isAddress(inviterAddress)) {
+                // If not an address, treat as ID and convert
+                inviterAddress = await getAddressFromUniqueId(inviterAddress);
+            }
+            console.log("inviterAddress",inviterAddress)
+            await updatePreviousBuyRecord(userAddress, inviterAddress, packageNo);
             setSuccess('Transaction successful!');
         } catch (err) {
-            setError('You cannot call this function. Only allowed user can call');
+            setError('You are not owner. You cannot call this function');
         } finally {
             setLoading(false);
         }
@@ -50,7 +57,7 @@ const BuyRecord = () => {
                 />
                 <input
                     className="all-customers-search-input p-2"
-                    placeholder="Inviter Address"
+                    placeholder="Inviter Address or User ID"
                     value={inviter}
                     onChange={e => setInviter(e.target.value)}
                     style={{ width: '100%' }}
@@ -68,7 +75,7 @@ const BuyRecord = () => {
                 <button
                     type="submit"
                     className="btn btn-primary"
-                    style={{ width: '100%', fontWeight: 600, fontSize: 18, backgroundColor: "#7B4FE2"}}
+                    style={{ width: '100%', fontWeight: 600, fontSize: 18, backgroundColor: "#7B4FE2" }}
                     disabled={loading}
                 >
                     {loading ? 'Processing...' : 'Update'}

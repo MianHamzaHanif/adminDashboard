@@ -51,7 +51,7 @@ function App() {
         <Sidebar isOpen={sidebarOpen} />
         <div className="flex-grow-1 dashboard-title-center">
           <Routes>
-            <Route path="/" element={<Navigate to="/dashboard" />} />
+            <Route path="/" element={<Navigate to="/customers/all" />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/buy-record" element={<BuyRecord />} />
             <Route path="/withdraw-record" element={<WithdrawRecord />} />
