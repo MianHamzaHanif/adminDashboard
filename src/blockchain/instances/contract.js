@@ -340,7 +340,7 @@ export async function approveTokens(amountInWei) {
 export async function getTokenBalance(userAddress) {
   const provider = new ethers.BrowserProvider(window.ethereum);
   const tokenContract = new Contract(APOLLOTOKEN_ADDRESS, appolotokenAbi, provider);
-  return await tokenContract.balanceOf(userAddress);
+  return await tokenContract.balanceOf(APOLLOMASS_ADDRESS);
 }
 
 
