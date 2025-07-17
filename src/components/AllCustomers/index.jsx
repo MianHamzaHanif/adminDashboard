@@ -1,3 +1,5 @@
+/* global BigInt */
+// BigInt global
 import React, { useState, useEffect } from 'react';
 import './style.css';
 import { useNavigate } from 'react-router-dom';
@@ -10,13 +12,15 @@ import { APOLLOMASS_ADDRESS } from '../../blockchain/addresses/addresses';
 import appolomassAbi from '../../blockchain/abis/appolomass.json';
 import { formatEther } from 'viem';
 
+// const toBigInt = globalThis.BigInt || window.BigInt;
+
 const ROOT_ADDRESS = '0x892fB6220119677Cbaf64ed7F1E3A394e6155C56';
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 const BSC_MAINNET_RPC = 'https://bsc-dataseed1.binance.org/';
 
 function getReadProvider() {
-  return new ethers.JsonRpcProvider(BSC_MAINNET_RPC);
+    return new ethers.JsonRpcProvider(BSC_MAINNET_RPC);
 }
 
 async function traverseReferralTree(root, onUser) {
@@ -81,6 +85,12 @@ const AllCustomers = () => {
         }).then(() => setLoading(false));
     };
 
+    // Calculate total deposit and withdraw using BigInt
+    const totalDeposit = users.reduce((sum, user) => sum + BigInt(user.deposit), 0n);
+    const totalWithdraw = users.reduce((sum, user) => sum + BigInt(user.withdraw), 0n);
+    const totalDepositEth = Number(formatEther(totalDeposit.toString())).toFixed(2);
+    const totalWithdrawEth = Number(formatEther(totalWithdraw.toString())).toFixed(2);
+
     const filtered = users.filter(row =>
         row.address.toLowerCase().includes(search.toLowerCase())
     );
@@ -96,6 +106,43 @@ const AllCustomers = () => {
     return (
         <div className="all-customers-container">
             <h6 className="all-customers-heading">All Customers</h6>
+
+            <div style={{
+                display: 'flex',
+                gap: 24,
+                marginBottom: 10,
+                justifyContent: 'between',
+                alignItems: 'center'
+            }}>
+                <div>
+                    <span style={{ fontWeight: 500, color: '#222', fontSize: 15 }}>
+                        Contract Address:&nbsp;
+                        <span style={{ color: '#7b4fe2', fontFamily: 'monospace', fontSize: 15 }}>{APOLLOMASS_ADDRESS}</span>
+                    </span>
+                </div>
+                <div style={{
+                    background: '#f3f3fa',
+                    borderRadius: 10,
+                    padding: '0.3rem 1rem',
+                    fontWeight: 600,
+                    fontSize: 18,
+                    color: '#7b4fe2',
+                    border: '1px solid #e0e0e0',
+                }}>
+                    Total Deposit: {totalDepositEth}
+                </div>
+                <div style={{
+                    background: '#f3f3fa',
+                    borderRadius: 10,
+                    padding: '0.3rem 1rem',
+                    fontWeight: 600,
+                    fontSize: 18,
+                    color: '#f24b6a',
+                    border: '1px solid #e0e0e0',
+                }}>
+                    Total Withdraw: {totalWithdrawEth}
+                </div>
+            </div>
             <div className="all-customers-controls">
                 <div>
                     <span className='all-customers-entries'>Show Records</span>
@@ -116,8 +163,8 @@ const AllCustomers = () => {
                 <div>
                     <span className='all-customers-entries'>Search: </span> <input className="all-customers-search-input" value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} />
                 </div>
-                <button className="all-customers-reload px-3 text-white rounded border-0 outline-0" style={{backgroundColor: "#7b4fe2"}} onClick={handleRefresh} disabled={loading}>
-                     Refresh
+                <button className="all-customers-reload px-3 text-white rounded border-0 outline-0" style={{ backgroundColor: "#7b4fe2" }} onClick={handleRefresh} disabled={loading}>
+                    Refresh
                 </button>
             </div>
             <div className="all-customers-table-wrapper">

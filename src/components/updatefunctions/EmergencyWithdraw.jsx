@@ -44,6 +44,7 @@ const EmergencyWithdraw = () => {
             }
         };
         fetchBalance();
+        
     }, []); // or [ownerAddress] if you want to refetch on address change
 
     const handleSubmit = async (e) => {
